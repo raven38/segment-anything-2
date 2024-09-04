@@ -1,4 +1,5 @@
 import os
+import sys
 from PIL import Image
 import numpy as np
 import torch
@@ -26,14 +27,18 @@ def show_mask(mask, ax, obj_id=None, random_color=False, borders=False):
 # Setup
 video_path = "notebooks/videos/bedroom"
 save_path = "notebooks/videos/bedroom_segmented"
-sam2_checkpoint = "checkpoints/sam2_hiera_tiny.pt"
-model_cfg = "sam2_hiera_t.yaml"
+sam2_checkpoint = "checkpoints/sam2_hiera_large.pt"
+model_cfg = "sam2_hiera_l.yaml"
 device = "cuda"
+video_path = sys.argv[1]
+save_path = sys.argv[2]
+
+
 
 # scan all the JPEG frame names in this directory
 frame_names = [
     p for p in os.listdir(video_path)
-    if os.path.splitext(p)[-1] in [".jpg", ".jpeg", ".JPG", ".JPEG"]
+    if os.path.splitext(p)[-1] in [".jpg", ".jpeg", ".JPG", ".JPEG", ".png", ".PNG"]
 ]
 frame_names.sort(key=lambda p: int(os.path.splitext(p)[0]))
 
