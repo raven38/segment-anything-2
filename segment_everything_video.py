@@ -55,7 +55,7 @@ print("Number of auto-masks:", len(auto_masks))
 predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint, device=device)
 inference_state = predictor.init_state(video_path=video_path)
 dtype = next(predictor.parameters()).dtype
-lowres_side_length = predictor.image_size // 4
+lowres_side_length = predictor.image_size
 for mask_idx, mask_result in enumerate(auto_masks):
 
     # Get mask into form expected by the model
@@ -89,7 +89,11 @@ for out_frame_idx, frame_name in enumerate(frame_names):
     frame = Image.open(frame_path)
     frame = np.array(frame.convert("RGB"))
     frame_segments = video_segments.get(out_frame_idx, {})
-    fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+    height, width = frame.shape[:2]
+    # インチ単位に変換（DPIを考慮）
+    dpi = 300  # または任意のDPI値
+    figsize = (width / dpi, height / dpi)
+    fig, ax = plt.subplots(1, 1, figsize=figsize)    
     ax.imshow(frame)
     for obj_id, mask in frame_segments.items():
         show_mask(mask, ax, obj_id=obj_id, random_color=False, borders=False)
