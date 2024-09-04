@@ -17,7 +17,7 @@ def show_mask(mask, ax, obj_id=None, random_color=False, borders=False):
     mask_image = mask.reshape(h, w, 1) * color.reshape(1, 1, -1)
     if borders:
         import cv2
-        contours, _ = cv2.findContours(m.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) 
+        contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) 
         # Try to smooth contours
         contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]
         cv2.drawContours(mask_image, contours, -1, (0, 0, 1, 0.4), thickness=1) 
@@ -87,7 +87,7 @@ for out_frame_idx, frame_name in enumerate(frame_names):
     fig, ax = plt.subplots(1, 1, figsize=(8, 8))
     ax.imshow(frame)
     for obj_id, mask in frame_segments.items():
-        show_mask(mask, ax, obj_id=obj_id, random_color=True, borders=True)
+        show_mask(mask, ax, obj_id=obj_id, random_color=True, borders=False)
     plt.axis("off")
     plt.savefig(os.path.join(save_path, frame_name))
     plt.close(fig)
