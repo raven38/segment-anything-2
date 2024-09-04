@@ -44,7 +44,7 @@ frame_names.sort(key=lambda p: int(os.path.splitext(p)[0]))
 
 # Auto-masking of first frame (from automatic mask generation notebook)
 sam2 = build_sam2(model_cfg, sam2_checkpoint, device=device, apply_postprocessing=False)
-first_frame_path = os.path.join(video_path, os.listdir(video_path)[0])
+first_frame_path = os.path.join(video_path, frame_names[0])
 first_frame = Image.open(first_frame_path)
 first_frame = np.array(first_frame.convert("RGB"))
 mask_generator = SAM2AutomaticMaskGenerator(sam2)
