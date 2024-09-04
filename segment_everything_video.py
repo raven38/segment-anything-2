@@ -91,7 +91,7 @@ for out_frame_idx, frame_name in enumerate(frame_names):
     frame_segments = video_segments.get(out_frame_idx, {})
     height, width = frame.shape[:2]
     # インチ単位に変換（DPIを考慮）
-    dpi = 300  # または任意のDPI値
+    dpi = 100  # または任意のDPI値
     figsize = (width / dpi, height / dpi)
     fig, ax = plt.subplots(1, 1, figsize=figsize)    
     ax.imshow(frame)
